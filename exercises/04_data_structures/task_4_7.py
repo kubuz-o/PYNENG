@@ -10,3 +10,8 @@
 """
 
 mac = "AAAA:BBBB:CCCC"
+
+mac_bin = bin(int(mac[0:4],16)).strip('0b') + bin(int(mac[5:9],16)).strip('0b') + bin(int(mac[10:],16)).strip('0b')
+
+print(mac_bin)
+
