@@ -24,3 +24,33 @@ Out[1]: '11111111111111111111111111110000'
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
+subnet_template = '''
+Network:
+    {0} 
+    {1:<8}  {2:<8}  {3:<8}  {4:<8} 
+    {1:08b}  {2:08b}  {3:08b}  {4:08b} 
+    Mask:
+        /{5} 
+        {6:<8}  {7:<8}  {8:<8}  {9:<8} 
+        {10}  {11}  {12}  {13} 
+        '''
+
+        subnet = input("Введите адрес подсети в формате 'network/mask':")
+        network = subnet.split('/')[0]
+        mask = subnet.split('/')[1]
+        mask_bin = '1' * int(mask) + '0' * (32 - int(mask))
+
+        print(subnet_template.format(network,
+                                                                  int(network.split('.')[0]),
+                                                                  int(network.split('.')[1]),
+                                                                  int(network.split('.')[2]),
+                                                                  int(network.split('.')[3]),
+                                                                  mask,
+                                                                  int(mask_bin[0:8], 2),
+                                                                  int(mask_bin[8:16], 2),
+                                                                  int(mask_bin[16:24], 2),
+                                                                  int(mask_bin[24:], 2),
+                                                                  mask_bin[0:8],
+                                                                  mask_bin[8:16],
+                                                                  mask_bin[16:24],
+                                                                  mask_bin[24:]))
