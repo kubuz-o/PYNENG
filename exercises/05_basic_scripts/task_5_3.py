@@ -63,3 +63,19 @@ trunk_template = [
     "switchport mode trunk",
     "switchport trunk allowed vlan {}",
 ]
+
+data_mode = input("Введите режим работы интерфейса (access/trunk): ")
+data_interface = input("Введите тип и номер интерфейса: ")
+data_vlan = input("Введите номер vlan: ")
+
+d_keys = ['access', 'trunk']  # ключи словаря - режим работы интерфейса
+template = dict.fromkeys(d_keys)  # создаем словарь
+# заполняем словарь шаблонами
+template['access'] = access_template
+template['trunk'] = trunk_template
+
+template_chosen = template[data_mode]  # выбранный шаблон по введенному режиму работы интерфейса
+config = '\n'.join(list(template_chosen))  # шаблон на вывод
+
+print('interface', data_interface, '\n', config.format(data_vlan))  # вывод конфига
+
