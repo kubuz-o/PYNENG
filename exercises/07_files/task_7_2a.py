@@ -11,5 +11,18 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+from sys import argv
 
 ignore = ["duplex", "alias", "Current configuration"]
+
+filename = argv[1]
+
+with open(filename, 'r') as file:
+    for line in file:
+        if not line.startswith('!'):
+            for word in ignore:
+                if word in line:
+                    break
+                else:
+                    print(line.rstrip('\n'))
+

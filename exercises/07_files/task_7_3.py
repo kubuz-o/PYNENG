@@ -17,3 +17,16 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+result = []  # наш список списков
+
+with open('CAM_table.txt', 'r') as file:  # открываем файл
+    for line in file:
+        line_split = line.rstrip('\n').split()  # убираем переходы на следующую строку, получаем списки
+        if bool(line_split) and line_split[0].isdigit():  # условие: непустой список И нулевой элемент - число
+            line_split.pop(2)  # удаляем ненужное слово
+            result.append(line_split)  # добавляем списки в наш список списков
+
+for i in result:
+    newline = ('{:9}{:20}{:6}'.format(i[0], i[1], i[2]))  # собираем новые строки на печать
+    print(newline)
+
