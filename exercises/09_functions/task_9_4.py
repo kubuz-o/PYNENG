@@ -35,3 +35,45 @@ def ignore_command(command, ignore):
     * False - если нет
     """
     return any(word in command for word in ignore)
+
+
+def convert_config_to_dict(config_filename):
+    """
+    Функция обрабатывает конфигурационный файл коммутатора и возвращает словарь:
+    * Все команды верхнего уровня (глобального режима конфигурации), будут ключами.
+    * Если у команды верхнего уровня есть подкоманды, они должны быть в значении у
+    соответствующего ключа, в виде списка(пробелы в начале строки надо удалить).
+    * Если у команды верхнего уровня нет подкоманд, то значение будет пустым списком
+    :param config_filename:
+    :return: dict
+    """
+    commands = {}  # создaем пустой словарь
+    lvl1 = []  # пустой список команд верхнего уровня
+    lvl2 = []  # пустой список команд нижнего уровня
+    with open(config_filename, 'r') as file:  # открываем файл конфига для чтения
+        for line in file:  # проходим файл построчно
+        # print('line:' + line.rstrip('\n')) # вывод строки
+            if not ignore_command(line, ignore) and not line.startswith('!'):  # условие по списку ignore и ! в начале
+                if line[0].isalpha():  # условие для команды верхнего уровня
+                    lvl1.append(line.rstrip('\n'))  # добавление команды в список lvl1
+                    """под новую команду lvl1 в списке lvl2 cоздаем вложенный список
+                    для включения в него команд нижнего уровня"""
+                    lvl2.append([])
+                    # print('lvl1: ')
+                    # print(lvl1)
+                    # print('lvl2 after add new elem:')
+                    # print(lvl2)
+                elif line.startswith(' '):  # условие для команды нижнего уровня
+                    # добавление команды в последний вложенный список списка lvl2
+                    lvl2[-1].append(line.lstrip(" ").rstrip('\n'))
+    #                 print('lvl2:')
+    #                 print(lvl2)
+    # print(lvl1)
+    # print(lvl2)
+    for n in range(0, len(lvl1)):  # в цикле соотносим команду из lvl1 с вложенным списком из списка lvl2
+        commands[lvl1[n]] = lvl2[n]
+return commands  # возвращаем словарь
+
+
+print(convert_config_to_dict('config_sw1.txt'))  # вывод
+
