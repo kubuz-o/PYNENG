@@ -65,14 +65,14 @@ def generate_trunk_config(intf_vlan_mapping, trunk_template):
     Возвращает список всех портов в режиме trunk с конфигурацией на основе шаблона
     """
     config_template = []  # пустой список
-        for intf, vlan in intf_vlan_mapping.items():  # проходим в цикле по словарю interface-vlan
+    for intf, vlan in intf_vlan_mapping.items():  # проходим в цикле по словарю interface-vlan
         config_template.append('interface ' + intf)  # заполняем список по каждому интерфейсу
-            for command in trunk_template:  # проходим в цикле по списку команд
-                if command.endswith('vlan'):  # условие для добавления номера vlan
-                    vlan_list = str(vlan).strip('[]')  # превращем список чисел в строку vlan
-                    config_template.append(f'{command} {vlan_list}')  # добавляем команды в конфиг
-                else:
-                    config_template.append(f'{command}')  # добавляем команды в конфиг
+        for command in trunk_template:  # проходим в цикле по списку команд
+            if command.endswith('vlan'):  # условие для добавления номера vlan
+                vlan_list = str(vlan).replace(' ', '').strip('[]')  # превращем список чисел в строку vlan
+                config_template.append(f'{command} {vlan_list}')  # добавляем команды в конфиг
+            else:
+                config_template.append(f'{command}')  # добавляем команды в конфиг
     return config_template  # возвращаем список команд
 
 

@@ -62,11 +62,11 @@ def generate_access_config(intf_vlan_mapping, access_template, psecurity):
                 config_template.append(f'{command}')  # добавляем команды в конфиг
                 if psecurity:
                     for command_2 in psecurity:  # проходим в цикле по списку команд
-                    config_template.append(f'{command_2}')
+                        config_template.append(f'{command_2}')
                 else:
                     break
     return config_template  # возвращаем список команд
 
 
-                                                                                                                                                                                              # print(generate_access_config(access_config, access_mode_template))
-                                                                                                                                                                                              print(generate_access_config(access_config, access_mode_template, port_security_template))
+# print(generate_access_config(access_config, access_mode_template))
+print(generate_access_config(access_config, access_mode_template, port_security_template))

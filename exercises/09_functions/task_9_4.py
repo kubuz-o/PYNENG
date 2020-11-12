@@ -72,7 +72,7 @@ def convert_config_to_dict(config_filename):
     # print(lvl2)
     for n in range(0, len(lvl1)):  # в цикле соотносим команду из lvl1 с вложенным списком из списка lvl2
         commands[lvl1[n]] = lvl2[n]
-return commands  # возвращаем словарь
+    return commands  # возвращаем словарь
 
 
 print(convert_config_to_dict('config_sw1.txt'))  # вывод
